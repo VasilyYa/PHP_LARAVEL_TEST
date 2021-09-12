@@ -6,14 +6,13 @@
 
     RewriteEngine On
 
-    # Redirect Trailing Slashes If Not A Folder...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R=301]
+    # redirect from 'domain' to 'domain/api'
+    RewriteCond %{REQUEST_URI} ^/$
+    RewriteRule ^(.*)$ /api/%1 [R=301]
 
-    # Send Requests To Front Controller...
+    # Send Requests from URIs '/api/...' to Front Controller 'index.php'
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [L]
-    # RewriteRule ^(.*)$ index.php?/$1 [L]
+    RewriteRule ^api/(.*)$ /index.php [L]
+
 </IfModule>

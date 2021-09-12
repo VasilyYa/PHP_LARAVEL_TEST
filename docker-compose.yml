@@ -10,13 +10,13 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ${PROJECT_ROOT}/:/var/www/html/
+      - ${PROJECT_ROOT}/:/var/www/html/public/
     container_name: apache
   php:
     image: nanoninja/php-fpm:${PHP_VERSION}
     restart: always
     volumes:
-      - ${PROJECT_ROOT}/:/var/www/html/
+      - ${PROJECT_ROOT}/:/var/www/html/public/
       - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
     container_name: php  
   mysqldb:
