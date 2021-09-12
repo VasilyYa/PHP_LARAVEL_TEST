@@ -1,0 +1,48 @@
+version: "3.2"
+services:
+  apache:
+    build:
+      context: './etc/apache/'
+    depends_on:
+      - php
+      - mysqldb
+    restart: always  
+    ports:
+      - "8000:80"
+    volumes:
+      - ${PROJECT_ROOT}/:/var/www/html/
+    container_name: apache
+  php:
+    image: nanoninja/php-fpm:${PHP_VERSION}
+    restart: always
+    volumes:
+      - ${PROJECT_ROOT}/:/var/www/html/
+      - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
+    container_name: php  
+  mysqldb:
+    image: mysql:${MYSQL_VERSION}
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+    container_name: "${MYSQL_HOST}"
+  phpmyadmin:
+    depends_on:
+      - mysqldb
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - '8080:80'
+    environment:
+      PMA_ARBITRARY: "1"
+      PMA_HOST: "${MYSQL_HOST}"  
+    container_name: phpmyadmin
+volumes:
+    data:

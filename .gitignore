@@ -1,0 +1,19 @@
+# Global
+.*.swp
+
+# Application
+html/app/vendor/
+html/app/doc/
+html/app/report/
+data/
+
+# PHPStorm
+.idea
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/dictionaries
+
+# My code snippets, test-scripts etc.
+snippets-trash
+phpinfo.php
+blank.php
