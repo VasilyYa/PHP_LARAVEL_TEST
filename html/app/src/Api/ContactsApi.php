@@ -35,7 +35,7 @@ class ContactsApi extends Api
         //write to Database and make a response to client:
         if (ContactsController::createContactOrReturnNull($email, $phone, $message)) {
 
-            return $this->response(array('result' => 'Ok', 'msg' => 'Data added to database'), 200);
+            return $this->response(array('result' => 'Ok', 'notice' => 'Data added to database'), 200);
 
         } else {
 

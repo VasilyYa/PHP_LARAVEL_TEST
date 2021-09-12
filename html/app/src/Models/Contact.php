@@ -13,10 +13,4 @@ class Contact extends Model
 
     protected $guarded = [];
 
-/*
-    public function getId()
-    {
-        return $this->id;
-    }*/
-
 }
