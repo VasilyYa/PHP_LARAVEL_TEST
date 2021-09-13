@@ -5,6 +5,7 @@ namespace App\Api;
 use App\Controllers\ContactsController;
 use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
 use Symfony\Component\Validator\Constraints\Regex as RegexConstraint;
+use Symfony\Component\Validator\Constraints\Length as LengthConstraint;
 use Symfony\Component\Validator\Validation;
 
 
@@ -36,15 +37,21 @@ class ContactsApi extends Api
         $validator = Validation::createValidator();
         $emailConstraint = new EmailConstraint();
         $phoneConstraint = new RegexConstraint('/^\+?[0-9\(\)\-\s]{5,20}$/');
+        $messageConstraint = new LengthConstraint(null, 0, 255);
         //email
-        $errors = $validator->validate($email,$emailConstraint);
+        $errors = $validator->validate($email, $emailConstraint);
         if (0 !== count($errors)) {
             return $this->response(array('result' => 'Failed', 'error' => 'Email is not valid'), 400);
         }
         //phone
-        $errors = $validator->validate($phone,$phoneConstraint);
+        $errors = $validator->validate($phone, $phoneConstraint);
         if (0 !== count($errors)) {
             return $this->response(array('result' => 'Failed', 'error' => 'Phone is not valid'), 400);
+        }
+        //message
+        $errors = $validator->validate($message, $messageConstraint);
+        if (0 !== count($errors)) {
+            return $this->response(array('result' => 'Failed', 'error' => 'Message is too long (max 255 symbols)'), 400);
         }
 
 
