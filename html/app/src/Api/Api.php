@@ -49,16 +49,16 @@ abstract class Api
         }
     }
 
-    protected function response($data, $status = 500)
+    protected function response($data, $responseCode = 500)
     {
-        header('HTTP/1.1 ' . $status . ' ' . $this->requestStatus($status));
+        header('HTTP/1.1 ' . $responseCode . ' ' . $this->getResponseStatusByCode($responseCode));
         header("Access-Control-Allow-Origin: *");
         header("Access-Control-Allow-Methods: *");
         header("Content-Type: application/json; charset=utf-8");
         return json_encode($data);
     }
 
-    private function requestStatus($code)
+    private function getResponseStatusByCode($responseCode)
     {
         $status = array(
             200 => 'OK',
@@ -67,7 +67,7 @@ abstract class Api
             405 => 'Method not allowed',
             500 => 'Internal server error',
         );
-        return ($status[$code]) ?: $status[500];
+        return ($status[$responseCode]) ?: '';
     }
 
     protected function getAction()
