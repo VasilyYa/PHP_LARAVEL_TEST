@@ -6,4 +6,4 @@
 
 ## RESTfull API described in './html/readme.md'
 
-### Test task for Laravel course completed by Vasily Yakovina
+### Test task
